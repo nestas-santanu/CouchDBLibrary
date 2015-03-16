@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CouchDBLibrary", "CouchDBLibrary\CouchDBLibrary.csproj", "{E311FA94-1BEE-496A-8128-A1417304DBA5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CouchDBConsole", "CouchDBConsole\CouchDBConsole.csproj", "{72C0AF3C-4705-426E-9C16-54ED4C7F6A10}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E311FA94-1BEE-496A-8128-A1417304DBA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E311FA94-1BEE-496A-8128-A1417304DBA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E311FA94-1BEE-496A-8128-A1417304DBA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E311FA94-1BEE-496A-8128-A1417304DBA5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72C0AF3C-4705-426E-9C16-54ED4C7F6A10}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72C0AF3C-4705-426E-9C16-54ED4C7F6A10}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72C0AF3C-4705-426E-9C16-54ED4C7F6A10}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72C0AF3C-4705-426E-9C16-54ED4C7F6A10}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
