@@ -6,9 +6,9 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("CouchDBLibrary")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("A C# library to interact with CouchDB")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Santanu Sen, nestas Consultancy")]
 [assembly: AssemblyProduct("CouchDBLibrary")]
 [assembly: AssemblyCopyright("Copyright ©  2015")]
 [assembly: AssemblyTrademark("")]
