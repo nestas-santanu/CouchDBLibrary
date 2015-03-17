@@ -65,7 +65,7 @@ CouchDB cDBLib = new CouchDB(AuthenticationSchemes.Basic, "cadmin", "cadminpwd")
 ```
 
 ####Methods:
-+ CreateDB
++ [CreateDB](https://github.com/nestas-santanu/CouchDBLibrary/blob/master/README.md#createdb)
 + ListDBs
 + FetchDB
 + CompactDatabase
