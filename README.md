@@ -65,6 +65,19 @@ CouchDB cDBLib = new CouchDB(AuthenticationSchemes.Basic, "cadmin", "cadminpwd")
 ```
 
 ####Methods:
++ CreateDB
++ ListDBs
++ FetchDB
++ CompactDatabase
++ CompactView
++ DeleteDB
++ CreateDocument
++ FetchDocument
++ UpdateDocument
++ UpsertDocument
++ DeleteDocument
++ PostBulkDocument
++ FetchDocuments
 
 #####CreateDB: 
 Creates a database 'dbName' in the queried instance of CouchDB.
@@ -72,7 +85,6 @@ Creates a database 'dbName' in the queried instance of CouchDB.
 public Response<string> CreateDB(string dbName){..}
 ```
 + `"dbName"`: The name of the database to be created.
-
 ######Usage: 
 ```csharp
 Response<string> response = cDBLib.CreateDB("test-1");
