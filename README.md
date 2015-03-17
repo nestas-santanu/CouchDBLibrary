@@ -58,3 +58,36 @@ public CouchDB( AuthenticationSchemes authenticationScheme, string userName, str
 + `"authenticationScheme"`: A scheme defined in the Enum `System.Net.AuthenticationSchemes`. Only the Basic scheme is supported in this library at the moment.
 + `"userName"/ "password"`: Credentials to query the CouchDB.
 + `"baseUrl"`: Defines the instance of the CouchDB to query. Default is `http://127.0.0.1:5984`
+
+######Usage:
+```csharp
+CouchDB cDBLib = new CouchDB(AuthenticationSchemes.Basic, "cadmin", "cadminpwd");
+```
+
+####Methods:
+
+#####CreateDB: 
+Creates a database 'dbName' in the queried instance of CouchDB.
+```csharp
+public Response<string> CreateDB(string dbName){..}
+```
++ `"dbName"`: The name of the database to be created.
+
+######Usage: 
+```csharp
+Response<string> response = cDBLib.CreateDB("test-1");
+```
+
+#####ListDB:
+Returns a list of DBs in the queried instance of CouchDB.
+```csharp
+public Response<string> ListDBs()
+```
+######Usage: 
+```csharp
+Response<string> response = cDBLib.ListDBs();
+```
+
+
+
+
