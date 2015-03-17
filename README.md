@@ -13,7 +13,7 @@ The library consists of 3 class files:
 2. `Response.cs`: All methods return a Response object
 3. `Authentication.cs`: The library currently supports only the Basic Authentication Scheme.
 
-##Response.cs
+###Response.cs
 
 ```csharp
 namespace CouchDBLibrary
@@ -47,9 +47,9 @@ Content: [
 ]
 ```
 
-##CouchDb.cs
+###CouchDb.cs
 
-###Constructor:
+####Constructor:
 
 ```csharp
 public CouchDB( AuthenticationSchemes authenticationScheme, string userName, string password, string baseUrl = @"http://127.0.0.1:5984"){..}
