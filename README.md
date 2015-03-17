@@ -73,7 +73,8 @@ CouchDB cDBLib = new CouchDB(AuthenticationSchemes.Basic, "cadmin", "cadminpwd")
 + [CompactView](https://github.com/nestas-santanu/CouchDBLibrary/blob/master/README.md#compactview)
 + [DeleteDB](https://github.com/nestas-santanu/CouchDBLibrary/blob/master/README.md#deletedb)
 + [CreateDocument](https://github.com/nestas-santanu/CouchDBLibrary/blob/master/README.md#createdocument)
-+ FetchDocument
++ [CreateDocument](https://github.com/nestas-santanu/CouchDBLibrary/blob/master/README.md#createdocument---overloaded)
++ [FetchDocument](https://github.com/nestas-santanu/CouchDBLibrary/blob/master/README.md#fetchdocument)
 + UpdateDocument
 + UpsertDocument
 + DeleteDocument
@@ -193,12 +194,12 @@ Creates a document in the database 'dbName' with the id 'documentId'in the queri
 public Response<string> CreateDocument(string dbName, string documentId, string document){..}
 ```
 + `"dbName"`: The name of the database.
-+ `"dbName"`: The id of the document to be created.
++ `"documentId"`: The id of the document to be created.
 + `"document"`: The document to be created in the database. Must be a JSON string.
 
 ######Usage: 
 ```csharp
-string json = string json = "{\"firstName\":\"John\",\"lastName\":\"Doe\"}";;
+string json = "{\"firstName\":\"John\",\"lastName\":\"Doe\"}";
 Response<string> response = cDBLib.CreateDocument("test-1", "emp1", json);
 ```
 
@@ -214,6 +215,78 @@ Content: {
   "rev": "1-f9584b2364c83ae6e05c670e1c17eeb4"
 }
 ```
+****
+
+#####FetchDocument:
+Fetches the document with id 'documentId' from the database 'dbName' in the queried instance of CouchDB.
+```csharp
+public Response<string> FetchDocument(string dbName, string documentId){..}
+```
++ `"dbName"`: The name of the database.
++ `"documentId"`: The id of the document to be fetched.
+
+######Usage: 
+```csharp
+Response<string> response = cDBLib.FetchDocument("test-1", "emp1");
+```
+
+The response is:
+```csharp
+Success: True
+StatusCode: 200
+ReasonPhrase: OK
+Message:
+Content: {
+  "_id": "emp1",
+  "_rev": "1-f9584b2364c83ae6e05c670e1c17eeb4",
+  "firstName": "John",
+  "lastName": "Doe"
+}
+```
+****
+
+#####UpdateDocument:
+Updates a document with 'documentId' in the database 'dbName' in the queried instance of CouchDB.
+```csharp
+public Response<string> UpdateDocument(string dbName, string documentId, string revisionId, string document){..}
+```
++ `"dbName"`: The name of the database.
++ `"documentId"`: The id of the document to be updated.
++ `"revisionId"`: The revision of the document to be updated.
++ `"document"`: The document to be updated in the database. Must be a JSON string.
+
+######Usage: 
+```csharp
+string json = "{\"firstName\":\"Jane\",\"lastName\":\"Doe\"}";
+Response<string> response = cDBLib.UpdateDocument("test-1", "emp1", "1-f9584b2364c83ae6e05c670e1c17eeb4", json);
+```
+
+The response is:
+```csharp
+Success: True
+StatusCode: 201
+ReasonPhrase: Created
+Message: The document with document ID = emp1 updated.
+Content: {
+  "ok": true,
+  "id": "emp1",
+  "rev": "2-8f867724dcd547ad31571d61412d844a"
+}
+```
+And a `FetchDocument` indicates that the data has been updated.
+```csharp
+Success: True
+StatusCode: 200
+ReasonPhrase: OK
+Message:
+Content: {
+  "_id": "emp1",
+  "_rev": "2-8f867724dcd547ad31571d61412d844a",
+  "firstName": "Jane",
+  "lastName": "Doe"
+}
+```
+****
 
 
 
