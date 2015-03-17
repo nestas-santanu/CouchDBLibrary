@@ -66,11 +66,11 @@ CouchDB cDBLib = new CouchDB(AuthenticationSchemes.Basic, "cadmin", "cadminpwd")
 
 ####Methods:
 + [CreateDB](https://github.com/nestas-santanu/CouchDBLibrary/blob/master/README.md#createdb)
-+ ListDBs
-+ FetchDB
-+ CompactDatabase
-+ CompactView
-+ DeleteDB
++ [ListDBs](https://github.com/nestas-santanu/CouchDBLibrary/blob/master/README.md#listdbs)
++ [FetchDB](https://github.com/nestas-santanu/CouchDBLibrary/blob/master/README.md#fetchdb)
++ [CompactDatabase](https://github.com/nestas-santanu/CouchDBLibrary/blob/master/README.md#compactdatabase)
++ [CompactView](https://github.com/nestas-santanu/CouchDBLibrary/blob/master/README.md#compactview)
++ [DeleteDB](https://github.com/nestas-santanu/CouchDBLibrary/blob/master/README.md#deletedb)
 + CreateDocument
 + FetchDocument
 + UpdateDocument
@@ -90,15 +90,62 @@ public Response<string> CreateDB(string dbName){..}
 Response<string> response = cDBLib.CreateDB("test-1");
 ```
 
-#####ListDB:
+#####ListDBs:
 Returns a list of DBs in the queried instance of CouchDB.
 ```csharp
-public Response<string> ListDBs()
+public Response<string> ListDBs(){..}
 ```
 ######Usage: 
 ```csharp
 Response<string> response = cDBLib.ListDBs();
 ```
+
+#####FetchDB:
+Checks if the database exists in the queried instance of CouchDB. Returns its information, if it exists.
+```csharp
+public Response<string> FetchDB(string dbName){..}
+```
++ `"dbName"`: The name of the database.
+######Usage: 
+```csharp
+Response<string> response = cDBLib.FetchDB("test-1");
+```
+
+#####CompactDatabase:
+Compacts the database 'dbName' in the queried instance of CouchDB.
+```csharp
+public Response<string> CompactDatabase(string dbName){..}
+```
++ `"dbName"`: The name of the database to compact.
+######Usage: 
+```csharp
+Response<string> response = cDBLib.CompactDatabase("test-1");
+```
+
+#####CompactView:
+Compacts the views in the design document 'designDoc' in the database 'dbName'.
+```csharp
+public Response<string> CompactView(string dbName, string designDoc){..}
+```
++ `"dbName"`: The name of the database to compact.
++ `"designDoc"`: The name of the design document.
+######Usage: 
+```csharp
+Response<string> response = cDBLib.CompactView("test-1", "test-1_ddoc");
+```
+
+#####DeleteDB:
+Deletes the database 'dbName' in the queried instance of CouchDB..
+```csharp
+public Response<string> DeleteDB(string dbName){..}
+```
++ `"dbName"`: The name of the database to compact.
+######Usage: 
+```csharp
+Response<string> response = cDBLib.DeleteDB("test-1");
+```
+
+
 
 
 
