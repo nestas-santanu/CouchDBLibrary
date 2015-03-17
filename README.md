@@ -63,6 +63,7 @@ public CouchDB( AuthenticationSchemes authenticationScheme, string userName, str
 ```csharp
 CouchDB cDBLib = new CouchDB(AuthenticationSchemes.Basic, "cadmin", "cadminpwd");
 ```
+****
 
 ####Methods:
 + [CreateDB](https://github.com/nestas-santanu/CouchDBLibrary/blob/master/README.md#createdb)
@@ -79,6 +80,8 @@ CouchDB cDBLib = new CouchDB(AuthenticationSchemes.Basic, "cadmin", "cadminpwd")
 + PostBulkDocument
 + FetchDocuments
 
+****
+
 #####CreateDB: 
 Creates a database 'dbName' in the queried instance of CouchDB.
 ```csharp
@@ -90,6 +93,7 @@ public Response<string> CreateDB(string dbName){..}
 ```csharp
 Response<string> response = cDBLib.CreateDB("test-1");
 ```
+****
 
 #####ListDBs:
 Returns a list of DBs in the queried instance of CouchDB.
@@ -100,6 +104,7 @@ public Response<string> ListDBs(){..}
 ```csharp
 Response<string> response = cDBLib.ListDBs();
 ```
+****
 
 #####FetchDB:
 Checks if the database exists in the queried instance of CouchDB. Returns its information, if it exists.
@@ -112,6 +117,7 @@ public Response<string> FetchDB(string dbName){..}
 ```csharp
 Response<string> response = cDBLib.FetchDB("test-1");
 ```
+****
 
 #####CompactDatabase:
 Compacts the database 'dbName' in the queried instance of CouchDB.
@@ -124,6 +130,7 @@ public Response<string> CompactDatabase(string dbName){..}
 ```csharp
 Response<string> response = cDBLib.CompactDatabase("test-1");
 ```
+****
 
 #####CompactView:
 Compacts the views in the design document 'designDoc' in the database 'dbName'.
@@ -137,6 +144,7 @@ public Response<string> CompactView(string dbName, string designDoc){..}
 ```csharp
 Response<string> response = cDBLib.CompactView("test-1", "test-1_ddoc");
 ```
+****
 
 #####DeleteDB:
 Deletes the database 'dbName' in the queried instance of CouchDB.
@@ -149,6 +157,7 @@ public Response<string> DeleteDB(string dbName){..}
 ```csharp
 Response<string> response = cDBLib.DeleteDB("test-1");
 ```
+****
 
 #####CreateDocument:
 Creates a document in the database 'dbName' in the queried instance of CouchDB.
@@ -176,6 +185,7 @@ Content: {
   "rev": "1-f9584b2364c83ae6e05c670e1c17eeb4"
 }
 ```
+****
 
 #####CreateDocument - overloaded:
 Creates a document in the database 'dbName' with the id 'documentId'in the queried instance of CouchDB.
