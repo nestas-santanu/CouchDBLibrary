@@ -46,3 +46,15 @@ Content: [
   "wvs-test_sample_2-xlsx"
 ]
 ```
+
+##CouchDb.cs
+
+###Constructor:
+
+```csharp
+public CouchDB( AuthenticationSchemes authenticationScheme, string userName, string password, string baseUrl = @"http://127.0.0.1:5984"){..}
+```
+
++ `"authenticationScheme"`: A scheme defined in the Enum `System.Net.AuthenticationSchemes`. Only the Basic scheme is supported in this library at the moment.
++ `"userName"/ "password"`: Credentials to query the CouchDB.
++ `"baseUrl"`: Defines the instance of the CouchDB to query. Default is `http://127.0.0.1:5984`
