@@ -15,7 +15,7 @@ The library consists of 3 class files:
 
 ##Response.cs
 
-```
+```csharp
 namespace CouchDBLibrary
 {
     public class Response<T>
@@ -33,7 +33,7 @@ The `Content` property is capable of returning any primitive type or object; how
 
 For example, a request to list all DB's on a local CouchDB instance, will return the following response, with the `Content` property containing the databases in the CouchDB instance.
 
-```
+```csharp
 Success: True 
 StatusCode: 200 
 ReasonPhrase: OK
