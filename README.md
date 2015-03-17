@@ -71,7 +71,7 @@ CouchDB cDBLib = new CouchDB(AuthenticationSchemes.Basic, "cadmin", "cadminpwd")
 + [CompactDatabase](https://github.com/nestas-santanu/CouchDBLibrary/blob/master/README.md#compactdatabase)
 + [CompactView](https://github.com/nestas-santanu/CouchDBLibrary/blob/master/README.md#compactview)
 + [DeleteDB](https://github.com/nestas-santanu/CouchDBLibrary/blob/master/README.md#deletedb)
-+ CreateDocument
++ [CreateDocument](https://github.com/nestas-santanu/CouchDBLibrary/blob/master/README.md#createdocument)
 + FetchDocument
 + UpdateDocument
 + UpsertDocument
@@ -85,6 +85,7 @@ Creates a database 'dbName' in the queried instance of CouchDB.
 public Response<string> CreateDB(string dbName){..}
 ```
 + `"dbName"`: The name of the database to be created.
+
 ######Usage: 
 ```csharp
 Response<string> response = cDBLib.CreateDB("test-1");
@@ -106,6 +107,7 @@ Checks if the database exists in the queried instance of CouchDB. Returns its in
 public Response<string> FetchDB(string dbName){..}
 ```
 + `"dbName"`: The name of the database.
+
 ######Usage: 
 ```csharp
 Response<string> response = cDBLib.FetchDB("test-1");
@@ -117,6 +119,7 @@ Compacts the database 'dbName' in the queried instance of CouchDB.
 public Response<string> CompactDatabase(string dbName){..}
 ```
 + `"dbName"`: The name of the database to compact.
+
 ######Usage: 
 ```csharp
 Response<string> response = cDBLib.CompactDatabase("test-1");
@@ -129,21 +132,80 @@ public Response<string> CompactView(string dbName, string designDoc){..}
 ```
 + `"dbName"`: The name of the database to compact.
 + `"designDoc"`: The name of the design document.
+
 ######Usage: 
 ```csharp
 Response<string> response = cDBLib.CompactView("test-1", "test-1_ddoc");
 ```
 
 #####DeleteDB:
-Deletes the database 'dbName' in the queried instance of CouchDB..
+Deletes the database 'dbName' in the queried instance of CouchDB.
 ```csharp
 public Response<string> DeleteDB(string dbName){..}
 ```
-+ `"dbName"`: The name of the database to compact.
++ `"dbName"`: The name of the database to delete.
+
 ######Usage: 
 ```csharp
 Response<string> response = cDBLib.DeleteDB("test-1");
 ```
+
+#####CreateDocument:
+Creates a document in the database 'dbName' in the queried instance of CouchDB.
+```csharp
+public Response<string> CreateDocument(string dbName, string document){..}
+```
++ `"dbName"`: The name of the database.
++ `"document"`: The document to be created in the database. Must be a JSON string.
+
+######Usage: 
+```csharp
+string json = "{\"firstName\":\"John\",\"lastName\":\"Doe\"}";
+Response<string> response = cDBLib.CreateDocument("test-1", json);
+```
+
+The id of the document is created by CouchDB.
+```csharp
+Success: True
+StatusCode: 201
+ReasonPhrase: Created
+Message: The document was created.
+Content: {
+  "ok": true,
+  "id": "7102b1416523f7398a90cf8120000611",
+  "rev": "1-f9584b2364c83ae6e05c670e1c17eeb4"
+}
+```
+
+#####CreateDocument - overloaded:
+Creates a document in the database 'dbName' with the id 'documentId'in the queried instance of CouchDB.
+```csharp
+public Response<string> CreateDocument(string dbName, string documentId, string document){..}
+```
++ `"dbName"`: The name of the database.
++ `"dbName"`: The id of the document to be created.
++ `"document"`: The document to be created in the database. Must be a JSON string.
+
+######Usage: 
+```csharp
+string json = string json = "{\"firstName\":\"John\",\"lastName\":\"Doe\"}";;
+Response<string> response = cDBLib.CreateDocument("test-1", "emp1", json);
+```
+
+The response is:
+```csharp
+Success: True
+StatusCode: 201
+ReasonPhrase: Created
+Message: The document with id = emp1 created.
+Content: {
+  "ok": true,
+  "id": "emp1",
+  "rev": "1-f9584b2364c83ae6e05c670e1c17eeb4"
+}
+```
+
+
 
 
 
