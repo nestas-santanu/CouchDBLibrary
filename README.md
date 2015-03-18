@@ -5,7 +5,7 @@ This library abstracts the HTTP requests to a CouchDB.
 It is a work in progress, but the methods available should be sufficient for CRUD operations on a CouchDB database.
 Tested on CouchDB version 1.6.
 
-Download the CouchDBLibrary to include in a .NET solution or project.
+Download the CouchDBLibrary and include as a .NET project. Reference this project from its client.
 
 The library consists of 3 class files:
 
