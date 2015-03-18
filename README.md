@@ -83,7 +83,7 @@ CouchDB cDBLib = new CouchDB(AuthenticationSchemes.Basic, "cadmin", "cadminpwd")
 
 ****
 
-#####CreateDB: 
+#####CreateDB
 Creates a database 'dbName' in the queried instance of CouchDB.
 ```csharp
 public Response<string> CreateDB(string dbName){..}
@@ -94,9 +94,20 @@ public Response<string> CreateDB(string dbName){..}
 ```csharp
 Response<string> response = cDBLib.CreateDB("test-1");
 ```
+
+The response is
+```csharp
+Success: True
+StatusCode: 201
+ReasonPhrase: Created
+Message: The database was created at http://127.0.0.1:5984/test-1.
+Content: {
+  "ok": true
+}
+```
 ****
 
-#####ListDBs:
+#####ListDBs
 Returns a list of DBs in the queried instance of CouchDB.
 ```csharp
 public Response<string> ListDBs(){..}
@@ -105,9 +116,23 @@ public Response<string> ListDBs(){..}
 ```csharp
 Response<string> response = cDBLib.ListDBs();
 ```
+
+The response is
+```csharp
+Success: True
+StatusCode: 200
+ReasonPhrase: OK
+Message: The Content property contains the list of databases in the CouchDB at http://127.0.0.1:5984.
+Content: [
+  "_replicator",
+  "_users",
+  "test-1",
+  "wvs-test_sample_2-xlsx"
+]
+```
 ****
 
-#####FetchDB:
+#####FetchDB
 Checks if the database exists in the queried instance of CouchDB. Returns its information, if it exists.
 ```csharp
 public Response<string> FetchDB(string dbName){..}
@@ -118,9 +143,30 @@ public Response<string> FetchDB(string dbName){..}
 ```csharp
 Response<string> response = cDBLib.FetchDB("test-1");
 ```
+
+The response is
+```csharp
+Success: True
+StatusCode: 200
+ReasonPhrase: OK
+Message: The database exists. The Content property contains the information of the database test-1.
+Content: {
+  "db_name": "test-1",
+  "doc_count": 0,
+  "doc_del_count": 0,
+  "update_seq": 0,
+  "purge_seq": 0,
+  "compact_running": false,
+  "disk_size": 79,
+  "data_size": 0,
+  "instance_start_time": "1426663741232830",
+  "disk_format_version": 6,
+  "committed_update_seq": 0
+}
+```
 ****
 
-#####CompactDatabase:
+#####CompactDatabase
 Compacts the database 'dbName' in the queried instance of CouchDB.
 ```csharp
 public Response<string> CompactDatabase(string dbName){..}
@@ -133,7 +179,7 @@ Response<string> response = cDBLib.CompactDatabase("test-1");
 ```
 ****
 
-#####CompactView:
+#####CompactView
 Compacts the views in the design document 'designDoc' in the database 'dbName'.
 ```csharp
 public Response<string> CompactView(string dbName, string designDoc){..}
@@ -147,7 +193,7 @@ Response<string> response = cDBLib.CompactView("test-1", "test-1_ddoc");
 ```
 ****
 
-#####DeleteDB:
+#####DeleteDB
 Deletes the database 'dbName' in the queried instance of CouchDB.
 ```csharp
 public Response<string> DeleteDB(string dbName){..}
@@ -160,7 +206,7 @@ Response<string> response = cDBLib.DeleteDB("test-1");
 ```
 ****
 
-#####CreateDocument:
+#####CreateDocument
 Creates a document in the database 'dbName' in the queried instance of CouchDB.
 ```csharp
 public Response<string> CreateDocument(string dbName, string document){..}
@@ -182,13 +228,13 @@ ReasonPhrase: Created
 Message: The document was created.
 Content: {
   "ok": true,
-  "id": "7102b1416523f7398a90cf8120000611",
+  "id": "cc5e82de2f03bf189828b3b39000153e",
   "rev": "1-f9584b2364c83ae6e05c670e1c17eeb4"
 }
 ```
 ****
 
-#####CreateDocument - overloaded:
+#####CreateDocument - overloaded
 Creates a document in the database 'dbName' with the id 'documentId'in the queried instance of CouchDB.
 ```csharp
 public Response<string> CreateDocument(string dbName, string documentId, string document){..}
@@ -208,7 +254,7 @@ The response is:
 Success: True
 StatusCode: 201
 ReasonPhrase: Created
-Message: The document with id = emp1 created.
+Message: The document with documentId = emp1 was created.
 Content: {
   "ok": true,
   "id": "emp1",
@@ -217,7 +263,7 @@ Content: {
 ```
 ****
 
-#####FetchDocument:
+#####FetchDocument
 Fetches the document with id 'documentId' from the database 'dbName' in the queried instance of CouchDB.
 ```csharp
 public Response<string> FetchDocument(string dbName, string documentId){..}
@@ -245,7 +291,7 @@ Content: {
 ```
 ****
 
-#####UpdateDocument:
+#####UpdateDocument
 Updates a document with 'documentId' in the database 'dbName' in the queried instance of CouchDB.
 ```csharp
 public Response<string> UpdateDocument(string dbName, string documentId, string revisionId, string document){..}
@@ -266,7 +312,7 @@ The response is:
 Success: True
 StatusCode: 201
 ReasonPhrase: Created
-Message: The document with document ID = emp1 updated.
+Message: The document with documentId = emp1 was updated.
 Content: {
   "ok": true,
   "id": "emp1",
@@ -285,6 +331,188 @@ Content: {
   "firstName": "Jane",
   "lastName": "Doe"
 }
+```
+****
+
+#####UpsertDocument
+Checks for a document with id 'documentId' in the database 'dbName' in the queried instance of CouchDB. 
+If not found, creates the document; if found, updates the latest revision of the document.
+```csharp
+public Response<string> UpsertDocument(string dbName, string documentId, string document){..}
+```
++ `"dbName"`: The name of the database.
++ `"documentId"`: The id of the document.
++ `"document"`: The document to be created/updated in the database. Must be a JSON string.
+
+######Usage: 
+```csharp
+//this will update the latest version of the document (changing lastNme from Doe to Smith
+string json = "{\"firstName\":\"Jane\",\"lastName\":\"Smith\"}";
+Response<string> response = cDBLib.UpsertDocument("test-1", "emp1", json);
+```
+
+The response is:
+```csharp
+Success: True
+StatusCode: 201
+ReasonPhrase: Created
+Message: The document with documentId = emp1 was updated.
+Content: {
+  "ok": true,
+  "id": "emp1",
+  "rev": "3-20c72eeb4e24c84c967a88f4ed7d2569"
+}
+```
+And a `FetchDocument` indicates that the document has been updated.
+```csharp
+Success: True
+StatusCode: 200
+ReasonPhrase: OK
+Message:
+Content: {
+  "_id": "emp1",
+  "_rev": "3-20c72eeb4e24c84c967a88f4ed7d2569",
+  "firstName": "Jane",
+  "lastName": "Smith"
+}
+```
+
+######Usage: 
+```csharp
+//this will create the document
+string json = "{\"firstName\":\"Jon\",\"lastName\":\"Smith\"}";
+Response<string> response = cDBLib.UpsertDocument("test-1", "emp2", json);
+```
+
+The response is:
+```csharp
+Success: True
+StatusCode: 201
+ReasonPhrase: Created
+Message: The document with documentId = emp2 was created.
+Content: {
+  "ok": true,
+  "id": "emp2",
+  "rev": "1-8cfd1700eceb12adf67c55f96b43b6d0"
+}
+```
+And a `FetchDocument` indicates that the document has been created.
+```csharp
+Success: True
+StatusCode: 200
+ReasonPhrase: OK
+Message:
+Content: {
+  "_id": "emp2",
+  "_rev": "1-8cfd1700eceb12adf67c55f96b43b6d0",
+  "firstName": "Jon",
+  "lastName": "Smith"
+}
+```
+****
+
+#####DeleteDocument
+Deletes the document with id 'documentId' from the database 'dbName' in the queried instance of CouchDB.
+```csharp
+public Response<string> DeleteDocument(string dbName, string documentId){..}
+```
++ `"dbName"`: The name of the database.
++ `"documentId"`: The id of the document to be fetched.
+
+######Usage: 
+```csharp
+Response<string> response = cDBLib.DeleteDocument("test-1", "emp1");
+```
+
+The response is:
+```csharp
+Success: True
+StatusCode: 200
+ReasonPhrase: OK
+Message: The document with documentId = emp1 was deleted.
+Content: {
+  "ok": true,
+  "id": "emp1",
+  "rev": "4-0a1ba0b5aa41f0a0a15b79f423b6cc2c"
+}
+
+```
+
+And a `FetchDocument` indicates that the document has been deleted.
+```csharp
+Success: False
+StatusCode: 404
+ReasonPhrase: Object Not Found
+Message: The Document with documentId = emp1 could not be found.
+Content: {
+  "error": "not_found",
+  "reason": "deleted"
+}
+```
+****
+
+#####PostBulkDocument
+Posts a bulk document to the database 'dbName' in the queried instance of CouchDB.
+```csharp
+public Response<string> PostBulkDocument(string dbName, string document){..}
+```
++ `"dbName"`: The name of the database.
++ `"document"`: The document to be posted to the database. Must be a JSON string in the format described [here](http://docs.couchdb.org/en/latest/api/database/bulk-api.html#db-bulk-docs).
+
+######Usage: 
+```csharp
+//Post bulk doc
+//{
+//  "docs": [
+//    {
+//      "_id": "emp3",
+//      "firstName": "John",
+//      "lastName": "Doe",
+//      "department": "HR"
+//    },
+//    {
+//      "_id": "emp2",
+//      "_rev": "1-8cfd1700eceb12adf67c55f96b43b6d0",
+//      "firstName": "Jon",
+//      "lastName": "Smith",
+//      "department": "Accounts"
+//    },
+//    {
+//      "_id": "cc5e82de2f03bf189828b3b39000153e",
+//      "_rev": "1-f9584b2364c83ae6e05c670e1c17eeb4",
+//      "deleted": true
+//    }
+//  ]
+//}
+//The first document will be created, the second document will be updated with the department information, the third document will be deleted.
+string bulkdoc = "{\"docs\":[{\"_id\":\"emp3\",\"firstName\":\"John\",\"lastName\":\"Doe\",\"department\":\"HR\"},{\"_id\":\"emp2\",\"_rev\":\"1-8cfd1700eceb12adf67c55f96b43b6d0\",\"firstName\":\"Jon\",\"lastName\":\"Smith\",\"department\":\"Accounts\"},{\"_id\":\"cc5e82de2f03bf189828b3b39000153e\",\"_rev\":\"1-f9584b2364c83ae6e05c670e1c17eeb4\",\"deleted\":true}]}";
+Response<string> response = cDBLib.PostBulkDocument("test-1", bulkdoc);
+```
+
+The response is:
+```csharp
+Success: True
+StatusCode: 201
+ReasonPhrase: Created
+Message: The document was posted.
+Please check the Content property for success or failure of operation on documents.
+Content: [
+  {
+    "ok": true,
+    "id": "emp3",
+    "rev": "1-20f7e9b1464ef5179cbc2fc3323c8517"
+  },
+  {
+    "ok": true,
+    "id": "emp2",
+    "rev": "2-c8f9698e079824378654034908428da6"
+  },
+  {
+    "ok": true,
+    "id": "cc5e82de2f03bf189828b3b39000153e",
+    "rev": "2-043d51fc5c700e113824cbc146d6f169"
+  }
+]
 ```
 ****
 
