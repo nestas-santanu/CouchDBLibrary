@@ -1,9 +1,9 @@
-﻿using System;
-using System.Text;
-using System.Net.Http;
-using Newtonsoft.Json.Linq;
-using System.Net.Http.Headers;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
 
 namespace CouchDBLibrary
 {
@@ -17,23 +17,16 @@ namespace CouchDBLibrary
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <param name="baseUrl">Defines the instance of the CouchDB being queried. Default is http://127.0.0.1:5984</param>
+        /// <param name="authenticationScheme">A scheme defined in the Enum System.Net.AuthenticationSchemes. Only the Basic scheme is supported in this library at the moment.</param>
         /// <param name="userName"></param>
         /// <param name="password"></param>
+        /// <param name="baseUrl">Defines the instance of the CouchDB to query. Default is http://127.0.0.1:5984</param>
         public CouchDB( AuthenticationSchemes authenticationScheme, string userName, string password, string baseUrl = @"http://127.0.0.1:5984")
         {
             this.baseUrl = baseUrl;
             this.userName = userName;
             this.password = password;
             this.authenticationScheme = authenticationScheme;
-        }
-
-        public CouchDB(string baseUrl = @"http://127.0.0.1:5984")
-        {
-            this.baseUrl = baseUrl;
-            this.userName = "";
-            this.password = "";
-            this.authenticationScheme = AuthenticationSchemes.None;
         }
 
         /// <summary>
@@ -627,7 +620,7 @@ namespace CouchDBLibrary
                     httpResponse.EnsureSuccessStatusCode();
 
                     Response<string> response = CreateResponse(httpResponse, resultString);
-                    response.Message = "The document with id = " + documentId + " created.";
+                    response.Message = "The document with documentId = " + documentId + " was created.";
 
                     return response;
                 }
@@ -637,7 +630,7 @@ namespace CouchDBLibrary
                 Response<string> response = CreateResponse(httpResponse, e, resultString);
                 if (response.StatusCode == 409)
                 {
-                    response.Message = "The document with id = " + documentId + "already exists.";
+                    response.Message = "The document with documentId = " + documentId + "already exists.";
                 }
                 else
                 {
@@ -649,7 +642,7 @@ namespace CouchDBLibrary
             catch (System.AggregateException e)
             {
                 Response<string> response = CreateResponse(httpResponse, e, resultString);
-                response.Message = "An error occured.\nCould not insert the document with id " + documentId + ".\n" + response.Message;
+                response.Message = "An error occured.\nCould not insert the document with documentId " + documentId + ".\n" + response.Message;
                 return response;
             }
             catch (Exception e)
@@ -723,7 +716,7 @@ namespace CouchDBLibrary
                 Response<string> response = CreateResponse(httpResponse, e, resultString);
                 if (response.StatusCode == 404)
                 {
-                    response.Message = "The Document with document id = " + documentId + "could not be found.\n" + e.Message;
+                    response.Message = "The Document with documentId = " + documentId + " could not be found.";
                 }
                 else
                 {
@@ -735,7 +728,7 @@ namespace CouchDBLibrary
             catch (System.AggregateException e)
             {
                 Response<string> response = CreateResponse(httpResponse, e, resultString);
-                response.Message = "An error occured.\nCould not retrieve the document with document id " + documentId + ".\n" + response.Message;
+                response.Message = "An error occured.\nCould not retrieve the document with documentId " + documentId + ".\n" + response.Message;
                 return response;
             }
             catch (Exception e)
@@ -774,7 +767,7 @@ namespace CouchDBLibrary
                     httpResponse.EnsureSuccessStatusCode();
 
                     Response<string> response = CreateResponse(httpResponse, resultString);
-                    response.Message = "The document with document ID = " + documentId + " updated.";
+                    response.Message = "The document with documentId = " + documentId + " was updated.";
 
                     return response;
                 }
@@ -784,7 +777,7 @@ namespace CouchDBLibrary
                 Response<string> response = CreateResponse(httpResponse, e, resultString);
                 if (response.StatusCode == 404)
                 {
-                    response.Message = "The Document with document id = " + documentId + "could not be found.\n" + e.Message;
+                    response.Message = "The Document with documentId = " + documentId + "could not be found.";
                 }
                 else
                 {
@@ -872,7 +865,7 @@ namespace CouchDBLibrary
                         httpResponse.EnsureSuccessStatusCode();
 
                         response = CreateResponse(httpResponse, resultString);
-                        response.Message = "The document " + documentId + " was deleted.";
+                        response.Message = "The document with documentId = " + documentId + " was deleted.";
 
                         return response;
                     }
@@ -886,9 +879,9 @@ namespace CouchDBLibrary
             catch (HttpRequestException e)
             {
                 Response<string> response = CreateResponse(httpResponse, e, resultString);
-                if (response.StatusCode == 400)
+                if (response.StatusCode == 404)
                 {
-                    response.Message = "The document " + documentId + " could not be found.\n" + e.Message;
+                    response.Message = "The document with documentId = " + documentId + " could not be found.";
                 }
                 else
                 {
@@ -900,7 +893,7 @@ namespace CouchDBLibrary
             catch (System.AggregateException e)
             {
                 Response<string> response = CreateResponse(httpResponse, e, resultString);
-                response.Message = "An error occured.\nCould not delete the document " + documentId + ".\n" + response.Message;
+                response.Message = "An error occured.\nCould not delete the document with documentId = " + documentId + ".\n" + response.Message;
 
                 return response;
             }
@@ -968,7 +961,7 @@ namespace CouchDBLibrary
                     httpResponse.EnsureSuccessStatusCode();
 
                     Response<string> response = CreateResponse(httpResponse, resultString);
-                    response.Message = "Bulk inserion of documents done.\nPlease check the Content property for success or failure of operation on documents.";
+                    response.Message = "The document was posted.\nPlease check the Content property for success or failure of operation on documents.";
 
                     return response;
                 }
@@ -994,12 +987,12 @@ namespace CouchDBLibrary
         }
 
         /// <summary>
-        /// Fetches a collection of documents from the database 'dbName' in the queried instance of CouchDB which matches the queryParameters.
+        /// Fetches a collection of documents from the database 'dbName', in the queried instance of CouchDB, which matches the query.
         /// </summary>
         /// <param name="dbName">The name of the database.</param>
-        /// <param name="queryParameters">The query parameter(s) to be executed.</param>
+        /// <param name="query">The query to be executed.</param>
         /// <returns>Returns a Response object. Access the Content property of the Response object for the fetched documents/ failure JSON statement returned by CouchDB</returns>
-        public Response<string> FetchDocuments(string dbName, string queryParameters)
+        public Response<string> FetchDocuments(string dbName, string query)
         {
             HttpResponseMessage httpResponse = new HttpResponseMessage(HttpStatusCode.BadRequest);
             string resultString = string.Empty;
@@ -1011,7 +1004,7 @@ namespace CouchDBLibrary
                     client.DefaultRequestHeaders.Authorization = GetAuthenticationHeaderValue(userName, password, authenticationScheme);
                     client.BaseAddress = new Uri(baseUrl);
 
-                    httpResponse = client.GetAsync(@"/" + dbName + queryParameters).Result;
+                    httpResponse = client.GetAsync(@"/" + dbName + query).Result;
 
                     resultString = httpResponse.Content.ReadAsStringAsync().Result;
 
