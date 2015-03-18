@@ -79,7 +79,7 @@ CouchDB cDBLib = new CouchDB(AuthenticationSchemes.Basic, "cadmin", "cadminpwd")
 + UpsertDocument
 + DeleteDocument
 + PostBulkDocument
-+ FetchDocuments
++ [FetchDocuments](#FetchDocuments)
 
 ****
 
@@ -228,7 +228,7 @@ ReasonPhrase: Created
 Message: The document was created.
 Content: {
   "ok": true,
-  "id": "cc5e82de2f03bf189828b3b39000153e",
+  "id": "cc5e82de2f03bf189828b3b390002161",
   "rev": "1-f9584b2364c83ae6e05c670e1c17eeb4"
 }
 ```
@@ -478,14 +478,14 @@ public Response<string> PostBulkDocument(string dbName, string document){..}
 //      "department": "Accounts"
 //    },
 //    {
-//      "_id": "cc5e82de2f03bf189828b3b39000153e",
+//      "_id": "cc5e82de2f03bf189828b3b390002161",
 //      "_rev": "1-f9584b2364c83ae6e05c670e1c17eeb4",
-//      "deleted": true
+//      "_deleted": true
 //    }
 //  ]
 //}
 //The first document will be created, the second document will be updated with the department information, the third document will be deleted.
-string bulkdoc = "{\"docs\":[{\"_id\":\"emp3\",\"firstName\":\"John\",\"lastName\":\"Doe\",\"department\":\"HR\"},{\"_id\":\"emp2\",\"_rev\":\"1-8cfd1700eceb12adf67c55f96b43b6d0\",\"firstName\":\"Jon\",\"lastName\":\"Smith\",\"department\":\"Accounts\"},{\"_id\":\"cc5e82de2f03bf189828b3b39000153e\",\"_rev\":\"1-f9584b2364c83ae6e05c670e1c17eeb4\",\"deleted\":true}]}";
+string bulkdoc = "{\"docs\":[{\"_id\":\"emp3\",\"firstName\":\"John\",\"lastName\":\"Doe\",\"department\":\"HR\"},{\"_id\":\"emp2\",\"_rev\":\"1-8cfd1700eceb12adf67c55f96b43b6d0\",\"firstName\":\"Jon\",\"lastName\":\"Smith\",\"department\":\"Accounts\"},{\"_id\":\"cc5e82de2f03bf189828b3b390002161\",\"_rev\":\"1-f9584b2364c83ae6e05c670e1c17eeb4\",\"_deleted\":true}]}";
 Response<string> response = cDBLib.PostBulkDocument("test-1", bulkdoc);
 ```
 
@@ -495,7 +495,8 @@ Success: True
 StatusCode: 201
 ReasonPhrase: Created
 Message: The document was posted.
-Please check the Content property for success or failure of operation on documents.
+Please check the Content property for success or failure of operation on documen
+ts.
 Content: [
   {
     "ok": true,
@@ -509,17 +510,153 @@ Content: [
   },
   {
     "ok": true,
-    "id": "cc5e82de2f03bf189828b3b39000153e",
-    "rev": "2-043d51fc5c700e113824cbc146d6f169"
+    "id": "cc5e82de2f03bf189828b3b390002161",
+    "rev": "2-6adb8452408c1aaa2a764146bfddc489"
   }
 ]
 ```
 ****
 
+#####FetchDocuments
+Fetches a collection of documents from the database 'dbName', in the queried instance of CouchDB, which matches a query.
+```csharp
+public Response<string> FetchDocuments(string dbName, string query){..}
+```
++ `"dbName"`: The name of the database.
++ `"query"`: he query to be executed.
 
+######Usage: 
+```csharp
+//condiser a design doc in the db test-1 with the view 'employees':
+//{
+//  "_id": "_design/employee",
+//  "_rev": "1-f14e4609b5612178594dac4b1efa3984",
+//  "views": {
+//    "employees": {
+//      "map": "function(doc) {
+//                if(doc.department){
+//                  emit(doc.department, null);
+//                }
+//              }",
+//      "reduce": "_count"
+//    }
+//  },
+//  "language": "javascript"
+//}
+//This allows us to query the data in many ways.
+```
+__Example: Get all the employees__ 
+```csharp
+string query = @"/_design/employee/_view/employees?include_docs=true&reduce=false";
+Response<string> response = cDBLib.FetchDocuments("test-1", query);
+```
 
+Response:
+```csharp
+Success: True, StatusCode: 200, ReasonPhrase: OK
+Message:
+Content: {
+  "total_rows": 2,
+  "offset": 0,
+  "rows": [
+    {
+      "id": "emp2",
+      "key": "Accounts",
+      "value": null,
+      "doc": {
+        "_id": "emp2",
+        "_rev": "2-c8f9698e079824378654034908428da6",
+        "firstName": "Jon",
+        "lastName": "Smith",
+        "department": "Accounts"
+      }
+    },
+    {
+      "id": "emp3",
+      "key": "HR",
+      "value": null,
+      "doc": {
+        "_id": "emp3",
+        "_rev": "1-20f7e9b1464ef5179cbc2fc3323c8517",
+        "firstName": "John",
+        "lastName": "Doe",
+        "department": "HR"
+      }
+    }
+  ]
+}
+```
 
+__Example: Get all employees in a department, say HR__ 
+```csharp
+string query = @"/_design/employee/_view/employees?key=""HR""&include_docs=true&reduce=false";
+Response<string> response = cDBLib.FetchDocuments("test-1", query);
+```
 
+Response:
+```csharp
+Success: True, StatusCode: 200, ReasonPhrase: OK
+Message:
+Content: {
+  "total_rows": 2,
+  "offset": 1,
+  "rows": [
+    {
+      "id": "emp3",
+      "key": "HR",
+      "value": null,
+      "doc": {
+        "_id": "emp3",
+        "_rev": "1-20f7e9b1464ef5179cbc2fc3323c8517",
+        "firstName": "John",
+        "lastName": "Doe",
+        "department": "HR"
+      }
+    }
+  ]
+}
+```
+
+__Example: Get the total count of employees__ 
+```csharp
+string query = @"/_design/employee/_view/employees";
+Response<string> response = cDBLib.FetchDocuments("test-1", query);
+```
+
+Response:
+```csharp
+Success: True, StatusCode: 200, ReasonPhrase: OK
+Message:
+Content: {
+  "rows": [
+    {
+      "key": null,
+      "value": 2
+    }
+  ]
+}
+```
+
+__Example: Get the total count of employees in a department, say 'Accounts'__ 
+```csharp
+string query = @"/_design/employee/_view/employees?key=""Accounts""";
+Response<string> response = cDBLib.FetchDocuments("test-1", query);
+```
+
+Response:
+```csharp
+Success: True, StatusCode: 200, ReasonPhrase: OK
+Message:
+Content: {
+  "rows": [
+    {
+      "key": null,
+      "value": 1
+    }
+  ]
+}
+```
+****
 
 
 
