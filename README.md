@@ -97,9 +97,7 @@ Response<string> response = cDBLib.CreateDB("test-1");
 
 The response is
 ```csharp
-Success: True
-StatusCode: 201
-ReasonPhrase: Created
+Success: True, StatusCode: 201, ReasonPhrase: Created
 Message: The database was created at http://127.0.0.1:5984/test-1.
 Content: {
   "ok": true
@@ -119,9 +117,7 @@ Response<string> response = cDBLib.ListDBs();
 
 The response is
 ```csharp
-Success: True
-StatusCode: 200
-ReasonPhrase: OK
+Success: True, StatusCode: 200, ReasonPhrase: OK
 Message: The Content property contains the list of databases in the CouchDB at http://127.0.0.1:5984.
 Content: [
   "_replicator",
@@ -146,9 +142,7 @@ Response<string> response = cDBLib.FetchDB("test-1");
 
 The response is
 ```csharp
-Success: True
-StatusCode: 200
-ReasonPhrase: OK
+Success: True, StatusCode: 200, ReasonPhrase: OK
 Message: The database exists. The Content property contains the information of the database test-1.
 Content: {
   "db_name": "test-1",
@@ -222,9 +216,7 @@ Response<string> response = cDBLib.CreateDocument("test-1", json);
 
 The id of the document is created by CouchDB.
 ```csharp
-Success: True
-StatusCode: 201
-ReasonPhrase: Created
+Success: True, StatusCode: 201, ReasonPhrase: Created
 Message: The document was created.
 Content: {
   "ok": true,
@@ -251,9 +243,7 @@ Response<string> response = cDBLib.CreateDocument("test-1", "emp1", json);
 
 The response is:
 ```csharp
-Success: True
-StatusCode: 201
-ReasonPhrase: Created
+Success: True, StatusCode: 201, ReasonPhrase: Created
 Message: The document with documentId = emp1 was created.
 Content: {
   "ok": true,
@@ -278,9 +268,7 @@ Response<string> response = cDBLib.FetchDocument("test-1", "emp1");
 
 The response is:
 ```csharp
-Success: True
-StatusCode: 200
-ReasonPhrase: OK
+Success: True, StatusCode: 200, ReasonPhrase: OK
 Message:
 Content: {
   "_id": "emp1",
@@ -309,9 +297,7 @@ Response<string> response = cDBLib.UpdateDocument("test-1", "emp1", "1-f9584b236
 
 The response is:
 ```csharp
-Success: True
-StatusCode: 201
-ReasonPhrase: Created
+Success: True, StatusCode: 201, ReasonPhrase: Created
 Message: The document with documentId = emp1 was updated.
 Content: {
   "ok": true,
@@ -321,9 +307,7 @@ Content: {
 ```
 And a `FetchDocument` indicates that the data has been updated.
 ```csharp
-Success: True
-StatusCode: 200
-ReasonPhrase: OK
+Success: True, StatusCode: 200, ReasonPhrase: OK
 Message:
 Content: {
   "_id": "emp1",
@@ -353,9 +337,7 @@ Response<string> response = cDBLib.UpsertDocument("test-1", "emp1", json);
 
 The response is:
 ```csharp
-Success: True
-StatusCode: 201
-ReasonPhrase: Created
+Success: True, StatusCode: 201, ReasonPhrase: Created
 Message: The document with documentId = emp1 was updated.
 Content: {
   "ok": true,
@@ -365,9 +347,7 @@ Content: {
 ```
 And a `FetchDocument` indicates that the document has been updated.
 ```csharp
-Success: True
-StatusCode: 200
-ReasonPhrase: OK
+Success: True, StatusCode: 200, ReasonPhrase: OK
 Message:
 Content: {
   "_id": "emp1",
@@ -386,9 +366,7 @@ Response<string> response = cDBLib.UpsertDocument("test-1", "emp2", json);
 
 The response is:
 ```csharp
-Success: True
-StatusCode: 201
-ReasonPhrase: Created
+Success: True, StatusCode: 201, ReasonPhrase: Created
 Message: The document with documentId = emp2 was created.
 Content: {
   "ok": true,
@@ -398,9 +376,7 @@ Content: {
 ```
 And a `FetchDocument` indicates that the document has been created.
 ```csharp
-Success: True
-StatusCode: 200
-ReasonPhrase: OK
+Success: True, StatusCode: 200, ReasonPhrase: OK
 Message:
 Content: {
   "_id": "emp2",
@@ -426,9 +402,7 @@ Response<string> response = cDBLib.DeleteDocument("test-1", "emp1");
 
 The response is:
 ```csharp
-Success: True
-StatusCode: 200
-ReasonPhrase: OK
+Success: True, StatusCode: 200, ReasonPhrase: OK
 Message: The document with documentId = emp1 was deleted.
 Content: {
   "ok": true,
@@ -440,9 +414,7 @@ Content: {
 
 And a `FetchDocument` indicates that the document has been deleted.
 ```csharp
-Success: False
-StatusCode: 404
-ReasonPhrase: Object Not Found
+Success: False, StatusCode: 404, ReasonPhrase: Object Not Found
 Message: The Document with documentId = emp1 could not be found.
 Content: {
   "error": "not_found",
@@ -491,9 +463,7 @@ Response<string> response = cDBLib.PostBulkDocument("test-1", bulkdoc);
 
 The response is:
 ```csharp
-Success: True
-StatusCode: 201
-ReasonPhrase: Created
+Success: True, StatusCode: 201, ReasonPhrase: Created
 Message: The document was posted.
 Please check the Content property for success or failure of operation on documen
 ts.
@@ -657,6 +627,3 @@ Content: {
 }
 ```
 ****
-
-
-
