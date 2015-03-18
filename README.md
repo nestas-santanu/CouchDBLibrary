@@ -66,20 +66,20 @@ CouchDB cDBLib = new CouchDB(AuthenticationSchemes.Basic, "cadmin", "cadminpwd")
 ****
 
 ####Methods:
-+ [CreateDB](https://github.com/nestas-santanu/CouchDBLibrary/blob/master/README.md#createdb)
-+ [ListDBs](https://github.com/nestas-santanu/CouchDBLibrary/blob/master/README.md#listdbs)
-+ [FetchDB](https://github.com/nestas-santanu/CouchDBLibrary/blob/master/README.md#fetchdb)
-+ [CompactDatabase](https://github.com/nestas-santanu/CouchDBLibrary/blob/master/README.md#compactdatabase)
-+ [CompactView](https://github.com/nestas-santanu/CouchDBLibrary/blob/master/README.md#compactview)
-+ [DeleteDB](https://github.com/nestas-santanu/CouchDBLibrary/blob/master/README.md#deletedb)
-+ [CreateDocument](https://github.com/nestas-santanu/CouchDBLibrary/blob/master/README.md#createdocument)
-+ [CreateDocument](https://github.com/nestas-santanu/CouchDBLibrary/blob/master/README.md#createdocument---overloaded)
-+ [FetchDocument](https://github.com/nestas-santanu/CouchDBLibrary/blob/master/README.md#fetchdocument)
-+ UpdateDocument
-+ UpsertDocument
-+ DeleteDocument
-+ PostBulkDocument
-+ [FetchDocuments](#FetchDocuments)
++ [CreateDB](#createdb)
++ [ListDBs](#listdbs)
++ [FetchDB](#fetchdb)
++ [CompactDatabase](#compactdatabase)
++ [CompactView](#compactview)
++ [DeleteDB](#deletedb)
++ [CreateDocument](#createdocument)
++ [CreateDocument](#createdocument---overloaded)
++ [FetchDocument](#fetchdocument)
++ UpdateDocument(#updatedocument)
++ UpsertDocument(#upsertdocument)
++ DeleteDocument(#deletedocument)
++ PostBulkDocument(#postbulkdocument)
++ [FetchDocuments](#fetchdocuments)
 
 ****
 
